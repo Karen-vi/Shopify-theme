@@ -1,0 +1,53 @@
+{% assign upsell_products = product.metafields.custom.related_upsell.value %}
+{% if upsell_products %}
+<section class="upsell-products">
+  <div class="page-width">
+    <h2 class="upsell-title">{{ section.settings.heading }}</h2>
+    <div class="grid grid--2-col">
+      {% for upsell_product in upsell_products %}
+        <div class="grid__item upsell-card">
+          <a href="{{ upsell_product.url }}">
+            {% if upsell_product.featured_image %}
+              <img width="300" height="300"
+                src="{{ upsell_product.featured_image | image_url: width: 400 }}" 
+                alt="{{ upsell_product.title | escape }}" 
+                class="upsell-image"
+              >
+            {% endif %}
+            <h3 class="upsell-name">{{ upsell_product.title }}</h3>
+          </a>
+          {% if upsell_product.selected_or_first_available_variant %}
+            <p class="upsell-price">
+              {{ upsell_product.selected_or_first_available_variant.price | money }}
+            </p>
+            <button 
+              class="button upsell-add" 
+              data-product-id="{{ upsell_product.selected_or_first_available_variant.id }}">
+              {{ 'products.product.add_to_cart' | t }}
+            </button>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Upsell Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título de la sección",
+      "default": "Productos recomendados"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Upsell Products"
+    }
+  ]
+}
+{% endschema %}
