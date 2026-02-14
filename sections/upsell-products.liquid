@@ -23,10 +23,13 @@
             {% endif %}
             <h3 class="upsell-name">{{ upsell_product.title }}</h3>
           </a>
-          {% if upsell_product.selected_or_first_available_variant and section.settings.show_price %}
-            <p class="upsell-price">
-              {{ upsell_product.selected_or_first_available_variant.price | money }}
-            </p>
+          {% if upsell_product.selected_or_first_available_variant  %}
+
+            {% if section.settings.show_price %}
+              <p class="upsell-price">
+                {{ upsell_product.selected_or_first_available_variant.price | money }}
+              </p>
+            {% endif %}
             <button 
               class="product-form__submit button--secondary button upsell-add" 
               data-product-id="{{ upsell_product.selected_or_first_available_variant.id }}">
@@ -51,12 +54,16 @@
       "default": "Productos recomendados"
     },
     {
-      "type": "number",
+      "type": "select",
       "id": "columns",
       "label": "Número de columnas",
       "default": 4,
-      "min": 1,
-      "max": 6
+      "options": [
+        { "value": "1", "label": "1 columna" },
+        { "value": "2", "label": "2 columnas" },
+        { "value": "3", "label": "3 columnas" },
+        { "value": "4", "label": "4 columnas" }
+      ]
     },
     {
       "type": "checkbox",
