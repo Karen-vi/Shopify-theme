@@ -1,5 +1,3 @@
-console.log("Upsell script cargado");
-
 document.addEventListener('click', async (event) => {
   const button = event.target.closest('.upsell-add');
   if (!button) return;
@@ -46,12 +44,14 @@ document.addEventListener('click', async (event) => {
     const data = await response.json();
 
     
-    if (data.status) {
+    if (!response.ok) {
       showError(button, data.description);
       return;
     }
 
-    
+    const errorEl = button.parentElement.querySelector('.upsell-error');
+    if (errorEl) errorEl.remove();
+
     if (cart) {
       cart.renderContents(data);
     } else {
@@ -80,4 +80,5 @@ function showError(button, message) {
   }
 
   errorEl.textContent = message;
+  errorEl.style.color = 'red';
 }
