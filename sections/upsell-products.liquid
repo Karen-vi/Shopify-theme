@@ -3,7 +3,14 @@
 <section class="upsell-products">
   <div class="page-width">
     <h2 class="upsell-title">{{ section.settings.heading }}</h2>
-    <div class="grid grid--2-col">
+    {% assign num_products = upsell_products | size %}
+    {% assign cols = section.settings.columns | plus: 0 %}
+    
+    {% if num_products < cols %}
+      {% assign cols = num_products %}
+    {% endif %}
+
+    <div class="grid grid--{{ cols }}-col">
       {% for upsell_product in upsell_products %}
         <div class="grid__item upsell-card">
           <a href="{{ upsell_product.url }}">
@@ -16,7 +23,7 @@
             {% endif %}
             <h3 class="upsell-name">{{ upsell_product.title }}</h3>
           </a>
-          {% if upsell_product.selected_or_first_available_variant %}
+          {% if upsell_product.selected_or_first_available_variant and section.settings.show_price %}
             <p class="upsell-price">
               {{ upsell_product.selected_or_first_available_variant.price | money }}
             </p>
@@ -42,6 +49,20 @@
       "id": "heading",
       "label": "Título de la sección",
       "default": "Productos recomendados"
+    },
+    {
+      "type": "number",
+      "id": "columns",
+      "label": "Número de columnas",
+      "default": 4,
+      "min": 1,
+      "max": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Mostrar precio",
+      "default": true
     }
   ],
   "presets": [
