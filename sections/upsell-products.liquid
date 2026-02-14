@@ -21,9 +21,10 @@
               {{ upsell_product.selected_or_first_available_variant.price | money }}
             </p>
             <button 
-              class="button upsell-add" 
+              class="product-form__submit button--secondary button upsell-add" 
               data-product-id="{{ upsell_product.selected_or_first_available_variant.id }}">
-              {{ 'products.product.add_to_cart' | t }}
+              <span>{{ 'products.product.add_to_cart' | t }}</span>
+              {% render 'loading-spinner' %}
             </button>
           {% endif %}
         </div>
@@ -32,7 +33,6 @@
   </div>
 </section>
 {% endif %}
-
 {% schema %}
 {
   "name": "Upsell Products",
