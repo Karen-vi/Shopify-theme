@@ -76,6 +76,15 @@
 
 /* base */
 
+
+.upsell-card a {
+  text-decoration: none;
+}
+.upsell-card a:hover {
+  text-decoration: underline; 
+  text-decoration-color:#000;
+}
+
 .page-width {
   max-width: var(--page-width);
   margin: 0 auto;
